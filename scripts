@@ -1,0 +1,30 @@
+const fs = require("fs");
+const path = require("path");
+const matter = require("gray-matter");
+
+// Markdown folder (jaha Netlify CMS .md files save karta hai)
+const inputDir = path.join(__dirname, "..", "anime");
+// JSON output folder
+const outputDir = path.join(__dirname, "..", "public", "data");
+
+if (!fs.existsSync(outputDir)) {
+  fs.mkdirSync(outputDir, { recursive: true });
+}
+
+// Har md file ko padho aur JSON me convert karo
+fs.readdirSync(inputDir).forEach(file => {
+  if (file.endsWith(".md")) {
+    const filePath = path.join(inputDir, file);
+    const fileContent = fs.readFileSync(filePath, "utf8");
+
+    const { data, content } = matter(fileContent);
+
+    const jsonFileName = file.replace(".md", ".json");
+    const jsonPath = path.join(outputDir, jsonFileName);
+
+    const finalData = { ...data, description: content.trim() };
+
+    fs.writeFileSync(jsonPath, JSON.stringify(finalData, null, 2));
+    console.log(`✅ Converted ${file} → ${jsonFileName}`);
+  }
+});
