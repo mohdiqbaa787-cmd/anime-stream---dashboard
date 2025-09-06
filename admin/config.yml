@@ -1,0 +1,48 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"     # where uploaded images are saved in repo
+public_folder: "/images/uploads"   # URL path used in the site
+
+collections:
+  - name: "anime"
+    label: "Anime"
+    files:
+      - name: "anime_data"
+        label: "Anime JSON"
+        file: "data/anime.json"
+        preview_path: ""
+        fields:
+          - label: "Anime List"
+            name: "animeList"
+            widget: "list"
+            fields:
+              - label: "Title"
+                name: "title"
+                widget: "string"
+              - label: "Slug"
+                name: "slug"
+                widget: "string"
+              - label: "Description"
+                name: "description"
+                widget: "text"
+              - label: "Poster"
+                name: "poster"
+                widget: "image"
+              - label: "Trailer (YouTube URL)"
+                name: "trailer"
+                widget: "string"
+              - label: "Episodes"
+                name: "episodes"
+                widget: "list"
+                fields:
+                  - label: "Episode Number"
+                    name: "ep"
+                    widget: "number"
+                  - label: "Episode Title"
+                    name: "title"
+                    widget: "string"
+                  - label: "YouTube Link"
+                    name: "link"
+                    widget: "string"
